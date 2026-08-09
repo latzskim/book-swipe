@@ -1,0 +1,24 @@
+"use client";
+
+import { useState } from "react";
+import type { Book, SwipeDecision } from "@/types/book";
+import BookComponent from "./BookComponent";
+
+export function SwipeDeck({ books }: { books: Book[] }) {
+  const [index, setIndex] = useState(0);
+  const book = books[index];
+
+  async function handleSwipe(decision: SwipeDecision) {
+    if (!book) return;
+    console.log(`you ${decision}d ${book.title}`);
+    setIndex((i) => i + 1);
+  }
+
+  if (!book) {
+    return (
+      <p className="text-center text-sm text-zinc-500">No more books</p>
+    );
+  }
+
+  return <BookComponent {...book} onSwipe={handleSwipe} />;
+}
