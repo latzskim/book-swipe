@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { Book, SwipeDecision } from "@/types/book";
 import BookComponent from "./BookComponent";
 import { SwipeableCard } from "./SwipeableCard";
+import { like, dislike } from "@/app/actions/book";
 
 export function SwipeDeck({ books }: { books: Book[] }) {
   const [index, setIndex] = useState(0);
@@ -11,7 +12,7 @@ export function SwipeDeck({ books }: { books: Book[] }) {
 
   async function handleSwipe(decision: SwipeDecision) {
     if (!book) return;
-    console.log(`you ${decision}d ${book.title}`);
+    decision === "like" ? await like(book.id) : await dislike(book.id);
     setIndex((i) => i + 1);
   }
 

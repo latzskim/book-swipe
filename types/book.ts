@@ -9,8 +9,9 @@ export type Book = {
   readonly author: string;
   readonly description: string;
   readonly coverUrl: string;
-  readonly likes: number;
-  readonly dislikes: number;
+  // TODO: restore readonly :)
+  likes: number;
+  dislikes: number;
 };
 
 /** User decision when swiping a book. */

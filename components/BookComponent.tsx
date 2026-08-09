@@ -12,6 +12,8 @@ export default function BookComponent({
   author,
   description,
   coverUrl,
+  likes,
+  dislikes,
 }: Book) {
   return (
     <article
@@ -50,6 +52,28 @@ export default function BookComponent({
           <p className="mt-3 line-clamp-3 translate-y-3 text-sm leading-relaxed text-white/80 transition-transform delay-75 duration-300 ease-out group-hover:translate-y-0 group-focus-within:translate-y-0 sm:text-[15px]">
             {description}
           </p>
+
+          {/* Stats — same rose/emerald language as Pass/Like stamps */}
+          <div className="mt-3 flex translate-y-3 items-center gap-2 transition-transform delay-100 duration-300 ease-out group-hover:translate-y-0 group-focus-within:translate-y-0">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-rose-400/50 bg-rose-500/15 px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-rose-200">
+              <span aria-hidden className="text-[10px] leading-none">
+                ✕
+              </span>
+              <span className="tabular-nums text-rose-100">{dislikes}</span>
+              <span className="font-medium normal-case tracking-normal text-rose-200/80">
+                pass
+              </span>
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/50 bg-emerald-500/15 px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-200">
+              <span aria-hidden className="text-[10px] leading-none">
+                ♥
+              </span>
+              <span className="tabular-nums text-emerald-100">{likes}</span>
+              <span className="font-medium normal-case tracking-normal text-emerald-200/80">
+                like
+              </span>
+            </span>
+          </div>
         </div>
       </div>
 
@@ -57,6 +81,9 @@ export default function BookComponent({
         <h2>{title}</h2>
         <p>by {author}</p>
         <p>{description}</p>
+        <p>
+          {likes} likes, {dislikes} passes
+        </p>
       </div>
     </article>
   );
