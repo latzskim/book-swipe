@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import type { Book, SwipeDecision } from "@/types/book";
+import type { Book } from "@/types/book";
 
 /**
  * Single book card for the swipe stack.
@@ -12,8 +12,7 @@ export default function BookComponent({
   author,
   description,
   coverUrl,
-  onSwipe,
-}: Book & { onSwipe: (decision: SwipeDecision) => void }) {
+}: Book) {
   return (
     <article
       tabIndex={0}
@@ -30,7 +29,8 @@ export default function BookComponent({
           priority
           quality={95}
           sizes="(max-width: 384px) 100vw, 384px"
-          className="block h-full w-auto max-w-full object-contain object-center"
+          className="block h-full w-auto max-w-full object-contain object-center pointer-events-none"
+          draggable={false}
         />
 
         {/* Metadata only on hover/focus — bound to the image, not the outer frame */}
@@ -51,32 +51,6 @@ export default function BookComponent({
             {description}
           </p>
         </div>
-      </div>
-
-      {/* Temporary swipe controls: left = dislike, right = like */}
-      <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-between px-2">
-        <button
-          type="button"
-          onClick={(e) => {
-            e.stopPropagation();
-            onSwipe("dislike");
-          }}
-          className="pointer-events-auto rounded-full bg-white/90 px-3 py-2 text-xs font-semibold uppercase tracking-wide text-rose-600 shadow-md ring-1 ring-rose-200 transition hover:bg-rose-50"
-          aria-label="Dislike book"
-        >
-          ← Pass
-        </button>
-        <button
-          type="button"
-          onClick={(e) => {
-            e.stopPropagation();
-            onSwipe("like");
-          }}
-          className="pointer-events-auto rounded-full bg-white/90 px-3 py-2 text-xs font-semibold uppercase tracking-wide text-emerald-600 shadow-md ring-1 ring-emerald-200 transition hover:bg-emerald-50"
-          aria-label="Like book"
-        >
-          Like →
-        </button>
       </div>
 
       <div className="sr-only">

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { Book, SwipeDecision } from "@/types/book";
 import BookComponent from "./BookComponent";
+import { SwipeableCard } from "./SwipeableCard";
 
 export function SwipeDeck({ books }: { books: Book[] }) {
   const [index, setIndex] = useState(0);
@@ -15,10 +16,12 @@ export function SwipeDeck({ books }: { books: Book[] }) {
   }
 
   if (!book) {
-    return (
-      <p className="text-center text-sm text-zinc-500">No more books</p>
-    );
+    return <p className="text-center text-sm text-black-500">No more books</p>;
   }
 
-  return <BookComponent {...book} onSwipe={handleSwipe} />;
+  return (
+    <SwipeableCard onSwipe={handleSwipe}>
+      <BookComponent {...book} />
+    </SwipeableCard>
+  );
 }
