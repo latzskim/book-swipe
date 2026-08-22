@@ -1,32 +1,36 @@
 "use server";
 
+import { db } from "@/db";
+import { books, booksInteractions } from "@/db/schema";
 import type { Book } from "@/types/book";
-
-const books: Book[] = [
-  {
-    id: "harry-potter-sorcerers-stone",
-    author: "J.K. Rowling",
-    title: "Harry Potter and the Sorcerer's Stone",
-    description:
-      "Harry Potter has never even heard of Hogwarts when letters start dropping on the doormat. Destined for greatness, he discovers a world of magic, friendship, and a dark force that wants him gone.",
-    coverUrl: "https://covers.openlibrary.org/b/id/15155644-L.jpg",
-    likes: 0,
-    dislikes: 0,
-  },
-];
+import { eq, sql } from "drizzle-orm";
 
 export async function getBooks(): Promise<Book[]> {
-  return books;
+  return await db.select().from(books);
 }
 
 export async function like(bookId: string) {
-  const book = books.find((b) => b.id === bookId);
-  if (!book) return;
-  book.likes += 1;
+  await db
+    .update(books)
+    .set({ likes: sql`${books.likes} + 1` })
+    .where(eq(books.id, bookId));
+
+  await db.insert(booksInteractions).values({
+    bookId: bookId,
+    userUuid: "1",
+    liked: true,
+  });
 }
 
 export async function dislike(bookId: string) {
-  const book = books.find((b) => b.id === bookId);
-  if (!book) return;
-  book.dislikes += 1;
+  await db
+    .update(books)
+    .set({ dislikes: sql`${books.dislikes} + 1` })
+    .where(eq(books.id, bookId));
+
+  await db.insert(booksInteractions).values({
+    bookId: bookId,
+    userUuid: "1",
+    liked: false,
+  });
 }

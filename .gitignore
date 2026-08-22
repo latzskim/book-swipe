@@ -97,3 +97,9 @@ next-env.d.ts
 
 # storybook
 storybook-static/
+
+# sqlite database
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal

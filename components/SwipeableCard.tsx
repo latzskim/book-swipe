@@ -23,7 +23,9 @@ export function SwipeableCard({ onSwipe, children }: Props) {
   const isDraggingRef = useRef(false);
   const onSwipeRef = useRef(onSwipe);
 
-  onSwipeRef.current = onSwipe;
+  useEffect(() => {
+    onSwipeRef.current = onSwipe;
+  }, [onSwipe]);
 
   const scale = isDragging ? 1.05 : 1;
 

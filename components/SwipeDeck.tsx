@@ -12,12 +12,16 @@ export function SwipeDeck({ books }: { books: Book[] }) {
 
   async function handleSwipe(decision: SwipeDecision) {
     if (!book) return;
-    decision === "like" ? await like(book.id) : await dislike(book.id);
+    if (decision === "like") {
+      await like(book.id);
+    } else {
+      await dislike(book.id);
+    }
     setIndex((i) => i + 1);
   }
 
   if (!book) {
-    return <p className="text-center text-sm text-black-500">No more books</p>;
+    return <p className="text-center text-sm text-zinc-500">No more books</p>;
   }
 
   return (
